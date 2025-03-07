@@ -1,11 +1,11 @@
 // variaveis
 // const BASE_WIDTH  = CONFIG.CANVAS.W
-const BASE_WIDTH  = Math.round( CONFIG.TILE_SIZE * 30 )
+const BASE_WIDTH   = Math.round( CONFIG.TILE_SIZE * 30 )
 // const BASE_HEIGHT = CONFIG.CANVAS.H
-const BASE_HEIGHT = Math.round( CONFIG.TILE_SIZE * 17 )
-const BASE_BG     = CONFIG.CANVAS.BG
-const TILE_SIZE   = CONFIG.TILE_SIZE
-const GRID_COLOR  = 'purple' 
+const BASE_HEIGHT  = Math.round( CONFIG.TILE_SIZE * 17 )
+const BASE_BG      = CONFIG.CANVAS.BG
+const TILE_SIZE    = CONFIG.TILE_SIZE
+const GRID_COLOR   = 'purple' 
 const WORLD_WIDTH  = CONFIG.WORLD.WIDTH
 const WORLD_HEIGHT = CONFIG.WORLD.HEIGHT
 
@@ -16,7 +16,7 @@ canvas.width  = BASE_WIDTH
 canvas.height = BASE_HEIGHT
 
 ////////////////////////////////////////
-WORLD_HEIGHT
+
 // buffer virtual - canvas dinamico
 const virtualCanvas = document.createElement( 'canvas' )
 const virtualCtx    = virtualCanvas.getContext( '2d' )
@@ -58,33 +58,38 @@ const LAYER = {
 
 
 
+////////// criação da camera principal do jogo
+const gameCamera = new Camera()
+
 ////////// INPUT
 
 const gameInputs = new InputManager()
 gameInputs.init()
 
-// cadastro da ação [NOME, FUNÇÃO]
+///// cadastro da ação [NOME, FUNÇÃO]
 gameInputs.addCommand( 'teste', () => console.log('attack') )
 
-// cadastro dos estados
+///// cadastro dos estados
 // gameInputs.setState( 'MENU' )
 
-// cadastro do estado [NOME, { 'KEY': 'ACTION' }]
+///// cadastro do estado [NOME, { 'KEY': 'ACTION' }]
 // gameInputs.addState( 'GAME', { 'u': 'teste' } )
 gameInputs.addState( 'GAME', { ' ': 'teste' } )
 
 
 
 ////////// CHAR
-const player = new Player({ color: 'green', x:0, y:0, speed: 10 })
-
-gameInputs.addCommand( 'moveUp',    () => player.Moving(0, -1) )
-gameInputs.addCommand( 'moveDown',  () => player.Moving(0,  1) )
-gameInputs.addCommand( 'moveLeft',  () => player.Moving(-1, 0) )
-gameInputs.addCommand( 'moveRight', () => player.Moving(1,  0) )
-
+const player = new Player({ color: 'green', x:0, y:0, speed: 5 })
 
 let currentTarget = player;
+
+gameInputs.addCommand( 'moveUp',    () => currentTarget.Moving(0, -1) )
+gameInputs.addCommand( 'moveDown',  () => currentTarget.Moving(0,  1) )
+gameInputs.addCommand( 'moveLeft',  () => currentTarget.Moving(-1, 0) )
+gameInputs.addCommand( 'moveRight', () => currentTarget.Moving(1,  0) )
+
+
+
 const player2 = new Player({ color: 'gold', x:700, y:700, speed: 10 })
 gameInputs.addCommand( 'focus', () => {
     currentTarget = currentTarget === player ? player2 : player;
@@ -105,9 +110,6 @@ gameInputs.addState('GAME', {
 })
 
 
-const gameCamera = new Camera()
-
-
 
 ////////////////////////////////////////
 
@@ -117,22 +119,19 @@ function Render(){
     virtualCtx.fillRect( 0, 0, BASE_WIDTH, BASE_HEIGHT )
 
     gameCamera.follow( currentTarget, virtualCtx )
-
     
-    ////////////////////
+    ////////////////////////////////////////
     // layer 2
     LAYER.GRID( virtualCtx )
 
     // layer 3
     player.Render( virtualCtx )
     player2.Render( virtualCtx )
-    ////////////////////
-
+    ////////////////////////////////////////
 
     // limpando o canvas real
     // ctx.fillStyle = BASE_BG
     // ctx.fillRect( 0, 0, BASE_WIDTH, BASE_HEIGHT )
-
     virtualCtx.restore()
 
     // desenhando o canvas virtual no canvas real
