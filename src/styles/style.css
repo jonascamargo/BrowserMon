@@ -16,6 +16,6 @@ body {
     background-color: #161616;
     border-radius: 6px;
     box-shadow: 0 3px 6px greenyellow;
-    width: 800px;
-    aspect-ratio: 16 / 9;
+    /* width: 800px;
+    aspect-ratio: 16 / 9; */
 }

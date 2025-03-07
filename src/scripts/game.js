@@ -2,10 +2,28 @@
 const CONFIG = {
     CANVAS: {
         W: 800,
-        H: 576,
+        H: 450,
         BG: '#161616',
     },
+
     TILE_SIZE: 32,
+
+    INPUTS: {
+        NAV: {
+            up: 'w',
+            down: 's',
+            left: 'a',
+            right: 'd',
+        },
+        ACTION: {
+            attack: 'j',
+            special: 'k',
+        },
+        UI: {
+            pause: 'p',
+            play: 'space',
+        }
+    },
 }
 
 ////////////////////      LOAD      ///////////////////
