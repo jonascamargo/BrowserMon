@@ -9,6 +9,16 @@ class InputManager {
         // bind (troca) estre o estato da tecla (precissonada / solta)
         this.handleKeyDown = this.handleKeyDown.bind( this )
         this.handleKeyUp   = this.handleKeyUp.bind( this )
+
+        // Adiciona suporte a touch
+        this.touchStartX = 0
+        this.touchStartY = 0
+        this.touchThreshold = 30 // Sensibilidade do touch
+
+        // Bind dos eventos de touch
+        this.handleTouchStart = this.handleTouchStart.bind( this )
+        this.handleTouchMove  = this.handleTouchMove.bind( this )
+        this.handleTouchEnd   = this.handleTouchEnd.bind( this )
     }
 
     log() {
@@ -18,6 +28,11 @@ class InputManager {
     init() {
         window.addEventListener( 'keydown', this.handleKeyDown )
         window.addEventListener( 'keyup', this.handleKeyUp )
+
+        // eventos de touch
+        canvas.addEventListener( 'touchstart', this.handleTouchStart )
+        canvas.addEventListener( 'touchmove', this.handleTouchMove )
+        canvas.addEventListener( 'touchend', this.handleTouchEnd )
     }
 
     handleKeyDown ( e ) {
@@ -25,9 +40,42 @@ class InputManager {
         // console.log( e.code )
         // console.log( 'key down: ['+ e.code +']['+ e.keyCode +']' )
     }
-
     handleKeyUp ( e ) {
         this.activeKeys.delete( e.key )
+    }
+
+    handleTouchStart( e ) {
+        e.preventDefault()
+
+        const touch = e.touches[ 0 ]
+
+        this.touchStartX = touch.clientX
+        this.touchStartY = touch.clientY
+    }
+    handleTouchMove( e ) {
+        e.preventDefault()
+
+        const touch = e.touches[ 0 ]
+        const deltaX = touch.clientX - this.touchStartX
+        const deltaY = touch.clientY - this.touchStartY
+
+        // Simula teclas baseado na direção do touch
+        this.activeKeys.clear()
+        
+        if ( Math.abs( deltaX ) > this.touchThreshold || Math.abs( deltaY ) > this.touchThreshold ) {
+            if ( Math.abs( deltaX ) > Math.abs( deltaY ) ) {
+                // Movimento horizontal
+                this.activeKeys.add( deltaX > 0 ? 'd' : 'a')
+            }
+            else {
+                // Movimento vertical
+                this.activeKeys.add(deltaY > 0 ? 's' : 'w')
+            }
+        }
+    }
+    handleTouchEnd( e ) {
+        e.preventDefault()
+        this.activeKeys.clear()
     }
 
     // altera o estado da tecla - para mudar a ação da mesma tecla
@@ -66,6 +114,11 @@ class InputManager {
     destroy() {
         window.removeEventListener( 'keydown', this.handleKeyDown )
         window.removeEventListener( 'keyup', this.handleKeyUp )
+
+        // eventos de touch
+        canvas.removeEventListener( 'touchstart', this.handleTouchStart )
+        canvas.removeEventListener( 'touchmove', this.handleTouchMove )
+        canvas.removeEventListener( 'touchend', this.handleTouchEnd )
     }
 }
 
