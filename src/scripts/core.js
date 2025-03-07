@@ -54,6 +54,38 @@ const LAYER = {
     }
 }
 
+
+////////// INPUT
+
+const gameInputs = new InputManager()
+gameInputs.init()
+
+// cadastro da ação [NOME, FUNÇÃO]
+gameInputs.addCommand( 'teste', () => console.log('attack') )
+
+// cadastro dos estados
+// gameInputs.setState( 'MENU' )
+
+// cadastro do estado [NOME, { 'KEY': 'ACTION' }]
+// gameInputs.addState( 'GAME', { 'u': 'teste' } )
+gameInputs.addState( 'GAME', { ' ': 'teste' } )
+
+
+////////// CHAR
+const player = new Pawn({ color: 'green', x: 100, y: 100, speed: 2 })
+
+gameInputs.addCommand('moveUp',    () => player.Moving(0, -1))
+gameInputs.addCommand('moveDown',  () => player.Moving(0,  1))
+gameInputs.addCommand('moveLeft',  () => player.Moving(-1, 0))
+gameInputs.addCommand('moveRight', () => player.Moving(1,  0))
+
+gameInputs.addState('GAME', {
+    'ArrowUp': 'moveUp',
+    'ArrowDown': 'moveDown',
+    'ArrowLeft': 'moveLeft',
+    'ArrowRight': 'moveRight'
+})
+
 ////////////////////////////////////////
 
 function Render(){
@@ -63,10 +95,15 @@ function Render(){
 
 
     ////////////////////
+    // layer 2
     LAYER.GRID( virtualCtx )
 
+    // layer 3
     virtualCtx.fillStyle = 'red'
     virtualCtx.fillRect( 0, 0, 50, 50 )
+
+    // layer 4
+    player.Render( virtualCtx )
     ////////////////////
 
 
@@ -83,6 +120,7 @@ function Render(){
 }
 
 function LoopGame(){
+    gameInputs.update()
     Render()
     requestAnimationFrame( LoopGame )
 }
