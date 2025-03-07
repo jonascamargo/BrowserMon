@@ -6,6 +6,11 @@ const CONFIG = {
         BG: '#161616',
     },
 
+    WORLD: {
+        WIDTH: 2000,
+        HEIGHT: 1500
+    },
+
     TILE_SIZE: 32,
 
     INPUTS: {
