@@ -90,7 +90,7 @@ gameInputs.addCommand( 'moveRight', () => currentTarget.Moving(1,  0) )
 
 
 
-const player2 = new Player({ color: 'gold', x:700, y:700, speed: 10 })
+const player2 = new Player({ color: 'gold', x:700, y:700, speed: 20 })
 gameInputs.addCommand( 'focus', () => {
     currentTarget = currentTarget === player ? player2 : player;
 } )

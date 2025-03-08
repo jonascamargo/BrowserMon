@@ -5,16 +5,19 @@ Um projeto experimental recriando o primeiro Pokémon do Game Boy usando apenas 
 
 ## 🎯 Objetivo  
 O objetivo é estudar e replicar a mecânica clássica do jogo original, incluindo:  
-- 🎨 Gráficos estilo 8-bit  
+- 🕹️ Controle via teclado 
 - 🌎 Mapa navegável  
+- 🎥 Camera que segue o player com dead-zone e movimento suave 
 - ⚔️ Sistema de batalhas por turnos  
-- 🎒 Inventário e captura de Pokémon  
+- 🎒 Inventário 
 - 🏛️ Interação com NPCs  
+- 📦 Captura de Monstrinhos  
 
 ## 🛠️ Tecnologias  
 - **JavaScript (Vanilla)** – Sem bibliotecas externas  
 - **HTML5 Canvas** – Renderização do jogo  
 - **CSS3** – Estilização básica  
+- **Docker** – A plataforma de conteinerizaçãoEstilização básica  
 
 ## 🚀 Status  
 🚧 Em desenvolvimento – Mecânica inicial sendo implementada.  
