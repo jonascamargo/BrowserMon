@@ -17,7 +17,6 @@ O objetivo é estudar e replicar a mecânica clássica do jogo original, incluin
 - **JavaScript (Vanilla)** – Sem bibliotecas externas  
 - **HTML5 Canvas** – Renderização do jogo  
 - **CSS3** – Estilização básica  
-- **Docker** – A plataforma de conteinerizaçãoEstilização básica  
 
 ## 🚀 Status  
 🚧 Em desenvolvimento – Mecânica inicial sendo implementada.  
